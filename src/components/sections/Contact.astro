@@ -1,0 +1,48 @@
+---
+/*
+Contactセクションです。このセクションではスタイルの適用範囲を学べます。
+*/ 
+import MoreBtn from "../parts/MoreBtn.astro";
+import SectionTitle from "../parts/SectionTitle.astro";
+---
+
+<section class="contact" id="contact">
+  <SectionTitle cls="mx-auto mb-6 noValid" color="white">contact</SectionTitle>
+  <p class="text-white mb-6 md:mb-20">
+    当店へのお問い合わせ・ご予約は<span class="inline-block"
+      >以下のボタンからお願いします。</span
+    >
+  </p>
+  <MoreBtn />
+</section>
+
+<style>
+  /* 
+  ちなみに、このようなCSSをSectionTitleのcls属性に当てても意味ありません。
+  .astro内の<style>で適用させられるのはそのコンポーネント内までです。
+  */
+  .noValid {
+    @apply mx-auto mb-10 sm:mb-20;
+  }
+
+  /* このコンポーネントで使うタグは反映されます */
+  .contact {
+    @apply py-10 md:py-20 bg-[url('/images/bg_contact_sp.png')] md:bg-[url('/images/bg_contact_pc.png')] bg-cover bg-center text-center relative z-0 grid place-items-center;
+  }
+  .contact::after {
+    content: "";
+    @apply absolute top-0 left-0 w-full h-full bg-[rgba(51,51,51,0.6)];
+  }
+
+  /* 逆にこの範囲内であればタグに直接当てても問題ありません */
+  img {
+    @apply w-full h-full object-cover;
+  }
+</style>
+
+<style is:global>
+  /* 「別コンポーネントにある適用させる」にはis:globalを指定してサイト全体に適用させる等をしてスタイルが届くようにする必要があります。その他、global.cssで設定する等も可能です。 */
+  .contact > * {
+    @apply z-10;
+  }
+</style>

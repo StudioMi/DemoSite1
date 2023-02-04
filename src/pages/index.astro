@@ -1,0 +1,21 @@
+---
+/*
+ 実際に表示されるページ(/)はこのファイルで設定します。 
+ このページでは各コンポーネント（パーツ）を配置しており、
+ 各セクションは/components/**.astroに配置しています。 
+*/
+
+import Firstview from "../components/sections/Firstview.astro";
+import Concept from "../components/sections/Concept.astro";
+import Menu from "../components/sections/Menu.astro";
+import Contact from "../components/sections/Contact.astro"
+import Layouts from "../layouts/Layouts.astro";
+---
+
+<!-- Layouts.astroでタイトルとディスクリプションの設定をしたので、ここでタイトルの設定ができます -->
+<Layouts title="デモサイトだみょーん">
+  <Firstview />
+  <Concept />
+  <Menu />
+  <Contact />
+</Layouts>

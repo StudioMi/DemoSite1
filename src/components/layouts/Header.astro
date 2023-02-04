@@ -1,0 +1,37 @@
+---
+/*
+レイアウトに使用するHeaderコンポーネントです
+jsonを使用した情報の管理が学べます。
+*/
+
+// jsonデータをインポートする
+import config from "../../assets/data/config.json";
+
+// 同じデータはFooterメニューでも使用しています。インポートしたデータを使用することで、config.jsonの中にあるメニューデータを編集するだけでヘッダーもフッターも一括で切り替わる仕組みです。
+---
+
+<header class="header">
+  <nav class="header-nav container-base">
+    <h1 class="site-logo"><a href="#">{config.siteTitle}</a></h1>
+    <ul class="flex gap-10 items-center font-mont">
+      <!-- インポートしたメニュー情報をループ処理。
+        見出しのテキストとリンクを一括表示します。 -->
+      {
+        config.mainManu.map((el) => (
+          <li class="capitalize leading-none">
+            <a href={`#${el}`} set:html={el} />
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .header {
+    @apply bg-[var(--clr-blue)] py-8 sm:py-4 text-white;
+  }
+  .header-nav {
+    @apply flex place-items-center sm:place-content-between flex-col sm:flex-row gap-4;
+  }
+</style>

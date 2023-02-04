@@ -1,0 +1,49 @@
+---
+/* 
+ファーストビューセクションです。
+特に目立った要素はありませんが、gridによる要素重ねが学べます。（これは個人的な趣味です）
+ */
+---
+
+<section class="firstview" id="firstview">
+  <img src="/images/firstview.jpg" alt="" class="firstview-image grid-1-1" decoding="async" loading="eager" />
+  <div class="container-base grid-1-1 m-auto">
+    <div class="firstview-message">
+      <h2 class="firstview-title font-mont">
+        <span class="capitalize">special</span><br />day<br /><span
+          class="capitalize">coffee</span
+        >
+      </h2>
+      <p class="firstview-comment font-mont">coffee for a special occasion</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* 要素を重ねる方法にはいくつか種類があります。position:absoluteはご存知だと思うので、今回はdisplay:gridを使う方法を使います。個人的にはこっちの方が好きです。 */
+
+  /* このようにfirstview-**のようなクラスが続くときは、ネストした方が楽ですね。tailwindではプラグインを入れればネストが使えるようになります。今回は使いません。 */
+  .firstview {
+    @apply grid grid-cols-1 grid-rows-1;
+  }
+  .firstview-image {
+    @apply object-cover w-full;
+    height: clamp(31.25rem, 27.118rem + 16.952vw, 42.375rem);
+  }
+  .firstview-message {
+    @apply text-white bg-[rgba(36,46,67,0.4)] p-10 sm:p-14 mx-auto sm:mx-0 w-fit h-fit;
+  }
+  .firstview-title {
+    @apply font-bold mb-6 leading-tight;
+    font-size: clamp(3rem, 2.257rem + 3.048vw, 5rem);
+  }
+  .firstview-comment {
+    @apply font-bold;
+    font-size: clamp(0.875rem, 0.643rem + 0.952vw, 1.5rem);
+  }
+
+  /* grid-areaを同じ位置にすることでレイヤーのように要素を重ねます */
+  .grid-1-1 {
+    grid-area: -1/1;
+  }
+</style>

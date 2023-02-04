@@ -1,0 +1,63 @@
+---
+/* Moreボタンコンポーネントです。
+このコンポーネントでは、Tailwind CSSの@applyについて学べます。
+アイコンはTailwindが作ったheroiconsを使用しています。https://heroicons.com/ */
+
+// PropsについてはSectionTitle.astroで解説しています。
+
+// 型定義は適当でも動きます
+const { cls }: { cls?: string } = Astro.props;
+---
+
+<!-- フォントはglobal.cssのutilitiesで設定したクラスを使用 -->
+<a href="#" class:list={["more-btn font-mont", cls]}
+  >more <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="2"
+    stroke="currentColor"
+    class="w-4 h-4"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
+  </svg>
+</a>
+
+<style>
+  .more-btn {
+    --btn-color: #ecc96b;
+    @apply bg-[var(--btn-color)] rounded-[10px] border-2 border-[var(--btn-color)] flex justify-center items-center w-60 h-[60px] transition-all text-xl leading-none capitalize font-medium duration-300 hover:bg-white hover:text-[var(--btn-color)];
+
+    /* 
+    @applyを使うことでCSS内でTailwindのクラスを使用する書き方ができます。慣れてしまえば普通のCSSよりも記述量が少なくなります。
+    もちろん全部HTMLタグに突っ込んでも構いません。
+    
+    Tailwindに慣れてないと見づらいと思いますが、
+    この2行でやっていることをCSSに直すとこんな感じです(順不同)
+    ↓↓↓↓↓↓↓↓↓
+    .more-btn {
+      --btn-color: #ecc96b;
+      background-color: var(--btn-color);
+      border-radius: 10px;
+      border: 2px solid var(--btn-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 240px;
+      height: 60px;
+      font-size: 1.25rem; // 20px
+      font-weight: 500;
+      line-height: 1;
+      text-transform: capitalize;
+      transition: all 3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .more-btn:hover {
+      background-color: white;
+      color: var(--btn-color);
+    }
+    */
+  }
+</style>

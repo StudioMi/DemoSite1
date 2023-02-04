@@ -1,0 +1,42 @@
+---
+/* 
+Conceptセクションです。
+このセクションではassetsフォルダ内にある画像について学べます。
+*/
+import SectionTitle from "../parts/SectionTitle.astro";
+
+// assets内にある画像はビルド時（HTMLファイルを作る時）に変換されてしまい、画像名やパスが変わります。そのため、インポートして使用します。
+// Astroの画像ライブラリを使用する際にはこの方法がよく使われます。
+import img from "../../assets/images/concept_pc.png";
+---
+
+<section class="container-base concept" id="contact">
+  <SectionTitle cls="mx-auto mb-10 sm:mb-20">concept</SectionTitle>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <!-- インポートして使用した画像は{}で呼び出します -->
+    <img src={img} alt="" />
+    <div class="concept-text">
+      <h3 class="text-center sm:text-left">日常に一杯のコーヒーを</h3>
+      <p>
+        毎日の日常の中に1杯のコーヒーを加えてみませんか？
+        「何気ない日を特別な日に変える」をコンセプトに「Special day
+        Coffee」ではオーナーが選別したこだわりの豆を使用したスペシャルなコーヒーをご用意してお客様をお待ちしております。
+      </p>
+      <p>
+        落ち着いた空間でコーヒーの匂いと心地よいjazzの音色、誰にも邪魔されないあなただけの時間を過ごしていただけます。
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .concept {
+    @apply my-[var(--space-base)] sm:my-[var(--space-section)];
+  }
+  .concept-text {
+    @apply grid place-content-center sm:px-20;
+  }
+  .concept-text h3 {
+    @apply text-xl leading-[24px] sm:leading-[32px] font-bold text-[var(--clr-blue)] mb-6;
+  }
+</style>

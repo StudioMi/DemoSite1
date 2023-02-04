@@ -1,0 +1,47 @@
+---
+/* 
+Menuセクションです。このコンポーネントでは、繰り返し処理が学べます。
+*/
+import MenuCard from "../parts/MenuCard.astro";
+import MoreBtn from "../parts/MoreBtn.astro";
+import SectionTitle from "../parts/SectionTitle.astro";
+
+// メニュー表示に使うパーツを一括で設定。項目を増やせば自動的にHTML側も増えます。JavaScriptで個数制限かけたり、フィルターをかけたり、APIから取得することもできます。
+const menuList = [
+  {
+    title: "coffee",
+    image: "/coffee.jpg",
+    comments: `当店自慢の豆を使用した香り高い<br class="md:hidden" />コーヒーを提供いたします。`,
+  },
+  {
+    title: "food",
+    image: "/food.jpg",
+    comments: `コーヒーに合う焼きたてのパンや軽食を<br class="md:hidden" />提供しております。`,
+  },
+  {
+    title: "dessert",
+    image: "/dessert.jpg",
+    comments: `日替わりでコーヒにぴったりな<span class="md:block hidden">、</span><br class="md:hidden" />手作ケーキを提供しております。`,
+  },
+];
+---
+
+<section class="menu container-base" id="menu">
+  <SectionTitle cls="mx-auto mb-10 sm:mb-20">menu</SectionTitle>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-y-9 place-items-center">
+    {
+      /* 
+      配列にmapメソッドを使用することで繰り返し処理しています。一度HTML部分を定義してしまえば配列部分をいじるだけで100個でも200個でも表示されるので便利です。
+      */
+      menuList.map((el) => (
+        <MenuCard img={el.image} alt={el.title}>
+          <Fragment slot="title">{el.title}</Fragment>
+          <div>
+            <p class="text-center md:text-left" set:html={el.comments} />
+          </div>
+        </MenuCard>
+      ))
+    }
+  </div>
+  <MoreBtn cls="mx-auto my-[var(--space-base)]" />
+</section>

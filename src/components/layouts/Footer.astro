@@ -1,0 +1,31 @@
+---
+/* 
+レイアウトに使用するフッターコンポーネントです。
+このコンポーネントではTailwindCSSを使用してCSSを書かない例を学べます。
+*/
+// フッターに並べるリンク情報を呼び出し
+import config from "../../assets/data/config.json";
+---
+
+<!-- 
+  フッターは<style>を作らず、
+  HTMLタグに直接全て書く方法で書いていきます。
+  単純な記述量だけで見るならこちらの方が短いです。
+-->
+
+<footer
+  class="bg-[var(--clr-blue)] text-white grid place-items-center py-10 sm:py-20"
+>
+  <h1 class="site-logo leading-[50px] mb-4"><a href="#">{config.siteTitle}</a></h1>
+  <ul class="flex gap-5 mb-8 sm:mb-12 flex-col sm:flex-row">
+    <!-- テキストとリンクを表示 -->
+    {
+      config.mainManu.map((el) => (
+        <li class="capitalize leading-none text-center font-mont">
+          <a href={`#${el}`} set:html={el} />
+        </li>
+      ))
+    }
+  </ul>
+  <p class="text-sm leading-none">&copy;coffeeShop 2022</p>
+</footer>

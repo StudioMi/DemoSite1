@@ -1,0 +1,54 @@
+---
+/*
+ Menuセクションで使用するMenuCardコンポーネントです。
+ このコンポーネントでは、slotについて学べます。
+*/
+
+// PropsについてはSectionTitle.astroで解説しています
+
+// 画像を必ず設定するように指定
+interface Props {
+  img: string;
+  alt?: string;
+}
+const { alt, img } = Astro.props;
+
+/* 
+<slot />はコンポーネントの中に別のコンポーネントやタグを差し込める機能です。
+
+例えば今回の場合では他のコンポーネントで
+<MenuCard>aaaaa</MenuCard>
+と記述すれば、このコンポーネントの
+<slot />
+と書いた位置に表示されます。
+ */
+---
+
+<div class="card">
+  <img
+    src={`/images${img}`}
+    alt={alt}
+    decoding="async"
+    loading="lazy"
+    class="card-image"
+  />
+  <h3 class="card-title font-mont">
+    <!-- slotには名前をつけることができます。複数のslotがある場合はnameを設定して記述すると区分けできます。ちなみにslot内を書くとデフォルトで表示させたい内容を設定できます。 -->
+    <slot name="title">No Title</slot>
+  </h3>
+  <!-- 逆に何も書かなければ初期は空欄です。 -->
+  <slot />
+</div>
+
+<style>
+  .card {
+    @apply max-w-xs grid gap-5;
+  }
+  .card-title {
+    @apply font-bold text-center capitalize;
+    font-size: clamp(1.25rem, 1.157rem + 0.381vw, 1.5rem);
+  }
+  .card-image {
+    @apply aspect-square object-cover;
+  }
+</style>

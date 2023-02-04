@@ -1,0 +1,42 @@
+---
+/*
+繰り返し使用されるセクションタイトルコンポーネントです。
+セクションタグは全てh2である前提で作っています。
+ここではPropsについて学べます。
+*/
+
+/* 
+## Propsについて
+
+Propsはコンポーネントに対して値を渡せる機能です。Propsを使用することで様々な情報を受け渡しでき、カスタマイズ性に優れたパーツを作ることができます。
+
+実際、このSectionTitleコンポーネントは各セクションで使われます。しかし、色や配置には差がありますので、その誤差を調整できるようにPropsを設定しています。
+*/
+
+// VSCodeではTypeScriptやAstro関連の拡張機能を入れることで型情報を認識してくれます。Propsという名前にすることでPropsに適用されます。
+interface Props {
+  color?: string;
+  cls?: string;
+}
+
+// Propsを呼び出すことで色々なところで使えるようになります。
+const { cls } = Astro.props;
+// 個別に呼び出すことも可能です。
+const color = Astro.props.color ? Astro.props.color : "";
+---
+
+<h2 class:list={["section-title font-mont", cls]}><slot /></h2>
+
+<style define:vars={{ color: color }}>
+  /* Propsで受け取った色情報はそのままでは使えません。CSS変数として定義する必要があります。define:varsを設定することでPropsで受け取った変数をCSS変数として使用できるようにします。 */
+  .section-title {
+    @apply capitalize border-b-[3px] border-[var(--color,var(--clr-blue))] text-[var(--color,var(--clr-blue))] font-bold pb-2 w-fit leading-[1.2];
+    font-size: clamp(1.5rem, 1.129rem + 1.524vw, 2.5rem);
+
+    /* 
+    ① テキストカラーはcolorが指定されている場合は指定色を表示、指定されていない場合はCSS変数のblueを表示させる設定にしています。
+    ② フォントサイズはメディアクエリではなくClampで指定しています。
+    Clampはこちらで計算しています→https://s1-tools.netlify.app/
+    */
+  }
+</style>

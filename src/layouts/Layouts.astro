@@ -1,0 +1,78 @@
+---
+/* 
+サイト全体で共通するレイアウトファイルです。
+このファイルを各ページで読み込むことで、ヘッダーやフッター等の共通レイアウトを一気に設定できます。
+ */
+
+// サイト全体に適用させたいCSSファイルをインポートする
+import "../styles/global.css";
+
+// レイアウトパーツをインポートする
+import Header from "../components/layouts/Header.astro";
+import Footer from "../components/layouts/Footer.astro";
+
+/* 
+以下はタイトルとディスクリプションを各ページから取得するための処理です。
+*/
+
+// 型定義することでちょっとだけ使いやすくなります
+interface Props {
+  title?: string;
+  desc?: string;
+}
+// 未入力の場合に適用させるデフォルト文
+const initialMetaData: Props = {
+  title: "デモサイトだみょーん",
+  desc: "こちらはAstroフレームワークを使用したサイト作成のデモページです。",
+};
+
+const title = Astro.props.title ? Astro.props.title : initialMetaData.title;
+const desc = Astro.props.desc ? Astro.props.desc : initialMetaData.desc;
+---
+
+<!-- ここからHTMLを書いていきます -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- タイトルとディスクリプションは各ページで編集できるようにPropsで取得 -->
+    <title>{title}</title>
+    <meta name="description" content={desc} />
+
+    <!-- Astroでは①CDN②ローカルフォントを@font-faceで呼び出す③Fontsourceを利用する等でカスタムフォントを使用できます。今回はGoogle FontsのCDNを使用しています。 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 共通スタイルはレイアウトファイル内に記述しても大丈夫です。管理しやすいのはglobal.cssに入れる方法です。 -->
+    <style>
+      :root {
+        --font-noto-sans: "Noto Sans JP", sans-serif;
+        --font-montserrat: "Montserrat", sans-serif;
+      }
+      /* bodyにグリッドを適用させてmainの高さを指定することで、フッターをページの下部に固定させています */
+      body {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+      }
+      main {
+        min-height: 100svh;
+        min-height: 100vh;
+      }
+    </style>
+
+    <!-- 例えばOGP情報やアナリティクス用のタグ等もここに記述します。ほぼHTMLです。 -->
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

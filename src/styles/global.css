@@ -1,0 +1,98 @@
+/* 
+TailwindCSSにはレイヤー機能があります。
+レイヤー機能を使うための機能を呼び出します 
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @tailwind variants; ←今回は使いません */
+
+:root {
+  /* 
+  sass,scss,lessに慣れていると違和感があるかもしれませんが、AstroやTailwindCSSでは基本的に「CSS変数」で諸々を定義したほうが便利です。
+  
+  「子コンポーネントに値を渡しやすい（よりパーツ化しやすくなる）」「JavaScriptで値を編集できるようになる」「値を上書きしやすい」
+  というメリットがあります。
+  */
+
+  /* 
+  今回はフォントの定義をLayouts.astroで行っています
+  --font-noto-sans: "Noto Sans JP", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif; 
+  */
+
+  /* 使用する色たち */
+  --clr-white: #f6f4ee;
+  --clr-black: #202020;
+  --clr-blue: #242e43;
+
+  --clr-gray1: #eaeaea;
+  --clr-gray2: #dcdcdc;
+  --clr-gray3: #cacaca;
+  --clr-gray4: #bababa;
+  --clr-gray5: #a5a5a5;
+  --clr-gray6: #8a8a8a;
+  --clr-gray7: #363636;
+  --clr-gray8: var(--clr-black);
+  --clr-gray9: #000000;
+
+  /* 余白サイズ */
+  --space-section: 120px;
+  --space-base: 80px;
+
+  /* コンテナ最大サイズ */
+  --container-base: 1080px;
+}
+
+/* 
+@layerを使うことで詳細度をコントロールしています。
+Tailwindの場合、base < components < utilities ( < variants ) の順に優先的に反映されていきます。
+*/
+
+/* @layer baseはタグ等の文字通りベースとなるセレクターを当てたい時に使います */
+@layer base {
+  body {
+    /* ベースフォントはNoto Sans JP */
+    font-family: var(--font-noto-sans);
+    color: var(--clr-black);
+  }
+}
+
+/* @layer componentsは複数のスタイル指定が必要な場合や大きなパーツを自作する時に使います */
+@layer components {
+  .site-logo {
+    /* 通常のCSSも書くことができます */
+    font-size: clamp(3rem, 2.837rem + 0.667vw, 3.438rem);
+    font-family: var(--font-montserrat);
+    font-weight: bold;
+    line-height: 1;
+      /* サイトロゴのような1パターンしかない単純なパーツはコンポーネント化した方が楽です。今回は説明用です */
+  }
+  .container-base {
+    /* 
+     メインコンテナサイズ設定。tailwind.config.cjsで設定した方が便利です。
+    */
+    @apply container max-w-[var(--container-base)];
+    /* 
+     tailwind.config.cjsした場合
+     @apply container max-w-base;
+    */
+  }
+}
+
+/* @layer utilitiesは一部だけ変更するようなCSSを自作する際に使用します */
+@layer utilities {
+  .font-noto {
+    font-family: var(--font-noto-sans);
+  }
+  .font-mont {
+    font-family: var(--font-montserrat);
+  }
+}
+
+/* 
+今回は使いませんが、状態変化（ホバーとか）に当てるクラスを指定する時に使ったりします。
+@layer variants {
+
+} 
+*/
